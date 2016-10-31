@@ -1,6 +1,12 @@
 # SoundCollector
 XNA game where you catching particles for points.
 
+When particles hit the shield (center of screen) game will decrement shield value.
+
+Shield is down = Game over
+
+Score multiplier = Shield value / 10
+
 Control:
 - Particles are collected by mouse (fast movement attracts particles)
 - Left mouse button (press) turns on "Bonus Lux"
