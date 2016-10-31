@@ -37,7 +37,6 @@ namespace SoundCollector
             //main variables
             this.Graphics = new GraphicsDeviceManager(this);
             this.SettingService = new SettingService();
-            //this.MainViewport = this.Graphics.GraphicsDevice.Viewport;
 
             //is this nessacery?
             this.MainViewport.MaxDepth = 200;
@@ -47,8 +46,7 @@ namespace SoundCollector
             this.Content.RootDirectory = "Content";
             this.Window.Title = APPLICATION_ROAMING_FOLDER;
             this.Window.AllowUserResizing = true;
-            //this.Graphics.PreferredBackBufferWidth = 1280;
-            //this.Graphics.PreferredBackBufferHeight = 720;
+
             this.Graphics.IsFullScreen = false;
             this.Graphics.ApplyChanges();
 

@@ -150,8 +150,7 @@ namespace SoundCollector.Components
                         }
                     }
                 }
-
-                //menu.update(ih.ActualMouseState, this._mainGame.MainViewport);
+                
                 if (ih.ActualMouseState.LeftButton == ButtonState.Pressed && !this._mouseMenuPressed)
                 {
                     this.MenuClick(this._selectedItem);
