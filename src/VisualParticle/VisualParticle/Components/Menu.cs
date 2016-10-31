@@ -231,7 +231,7 @@ namespace SoundCollector.Components
                                             }
                                             catch (ArgumentException)
                                             {
-                                                this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, "Wrong characrter", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Black);
+                                                this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, "Wrong character", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Black);
                                             }
                                         }
                                     }
@@ -256,10 +256,10 @@ namespace SoundCollector.Components
                         this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Please insert some songs", new Vector2(this._mainGame.MainViewport.Width / 2 - this._width / 2 + 20, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 80), Color.Yellow);
                         this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "into MS MediaPlayer", new Vector2(this._mainGame.MainViewport.Width / 2 - this._width / 2 + 120, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 180), Color.Yellow);
                     }
-                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "sound collector", new Vector2(this._mainGame.MainViewport.Width / 2.5f + 8, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 12), Color.Black);
-                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "sound collector", new Vector2(this._mainGame.MainViewport.Width / 2.5f + 5, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 10), Color.MediumSlateBlue);
+                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "sound collector", new Vector2(this._mainGame.MainViewport.Width / 2.5f - 15, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 12), Color.Black);
+                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "sound collector", new Vector2(this._mainGame.MainViewport.Width / 2.5f - 18, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 10), Color.MediumSlateBlue);
 
-                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "runs on dpsf particle engine", new Vector2(this._mainGame.MainViewport.Width / 2 - this._width / 2, this._mainGame.MainViewport.Height / 2 + this._height / 2 - 40), Color.Peru);
+                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "runs on dpsf particle engine", new Vector2(this._mainGame.MainViewport.Width / 2 - this._width / 2, this._mainGame.MainViewport.Height / 2 + this._height / 2 - 41), Color.Peru);
                 }
             }
         }
