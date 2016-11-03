@@ -82,7 +82,7 @@ namespace SoundCollector.Components
         {
             MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
             ResourcesComponent rc = this._mainGame.GameManager.GetComponent<ResourcesComponent>();
-            this._mainGame.MainSpriteBatch.Draw(rc.PlayerTexture, new Rectangle(this._mainGame.MainViewport.Width / 2 , this._mainGame.MainViewport.Height / 2, 50, 50), Color.White * mp.AvarageFrequency * 1.9f);
+            this._mainGame.MainSpriteBatch.Draw(rc.PlayerTexture, new Rectangle(this._mainGame.MainViewport.Width / 2 + 2, this._mainGame.MainViewport.Height / 2, 50, 50), Color.White * mp.AvarageFrequency * 1.9f);
             this._mainGame.MainSpriteBatch.Draw(this.Circle, new Vector2(this._mainGame.MainViewport.Width / 2  - this.Shield, this._mainGame.MainViewport.Height / 2 - this.Shield ), Color.DarkMagenta * mp.AvarageFrequency);
         }
     }
