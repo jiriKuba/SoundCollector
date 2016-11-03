@@ -23,10 +23,10 @@ Project can be opened in Visual Studio
 
 Game is written in XNA framework (C# .NET) and uses DPSF library (http://www.xnaparticles.com/) 
 
-Current version 0.9.8
+Current version 0.9.9
 
 Known issues:
-- Game is not playing next song after current song ends
+- ~~Game is not playing next song after current song ends~~(fixed in 0.9.9)
 - Texts are sometimes too long (overflowing menu)
 
 ![alt tag](http://www.itnetwork.cz/images/53403567abf3b_image_0)
