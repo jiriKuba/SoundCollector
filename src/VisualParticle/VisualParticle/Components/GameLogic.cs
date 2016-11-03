@@ -89,8 +89,6 @@ namespace SoundCollector.Components
                 }
 
                 //reset score
-                this._mainGame.Window.Title = mp.ActiveSong.Artist.Name + "-" + mp.ActiveSong.Name;
-
                 Int32? searchForSongActual = mp.SongArchive.SearchByArtisName(mp.ActiveSong.Artist.Name, mp.ActiveSong.Name);
                 if (searchForSongActual.HasValue)
                 {
@@ -291,7 +289,14 @@ namespace SoundCollector.Components
                         this._bonusTime = 5;
                     }
 
+                    //when music time is over and song didnt changed
+                    if (this._musicMinutes == 0 && this._musicSeconds == 0)
+                    {
+                        mp.ShuffledNextSong();
+                    }
+
                     this.CalculateTimeToEnd();
+
                     this._prevMusicTime = gameTime.TotalGameTime;
                 }
             }

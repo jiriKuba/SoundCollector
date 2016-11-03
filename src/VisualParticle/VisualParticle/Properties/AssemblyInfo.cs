@@ -32,7 +32,7 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.9.8.0")]
+[assembly: AssemblyVersion("0.9.9.0")]
 [assembly: NeutralResourcesLanguageAttribute("en")]
-[assembly: AssemblyFileVersion("0.9.8")]
+[assembly: AssemblyFileVersion("0.9.9")]
 
