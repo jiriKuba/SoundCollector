@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using SoundCollector.HelpObjects;
+using SoundCollector.Utils;
 
 namespace SoundCollector.Components
 {
@@ -159,7 +160,7 @@ namespace SoundCollector.Components
             if (this.ActiveSong == null)
                 return MainGame.APPLICATION_ROAMING_FOLDER;
             else
-                return String.Format("{0}{1}{2}", this.ActiveSong.Artist.Name, String.IsNullOrEmpty(this.ActiveSong.Artist.Name) ? String.Empty : " - ", this.ActiveSong.Name);
+                return TextUtils.GetSongName(this.ActiveSong);
         }
 
         public TimeSpan GetActiveSongDuration()

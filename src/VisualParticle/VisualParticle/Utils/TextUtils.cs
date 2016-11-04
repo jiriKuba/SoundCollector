@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Media;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,16 +14,22 @@ namespace SoundCollector.Utils
             if (String.IsNullOrEmpty(input))
                 return input;
 
-            //String normalized = input.Normalize(NormalizationForm.FormKD);
-            //Encoding removal = Encoding.GetEncoding(Encoding.ASCII.CodePage,
-            //                                        new EncoderReplacementFallback(""),
-            //                                        new DecoderReplacementFallback(""));
-            //Byte[] bytes = removal.GetBytes(normalized);
-            //return Encoding.ASCII.GetString(bytes);
-
             String decomposed = input.Normalize(NormalizationForm.FormD);
             IEnumerable<Char> filtered = decomposed.Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark);
             return new String(filtered.ToArray());
+        }
+
+        public static String GetSongName(Song s)
+        {
+            if (s == null)
+                return "NULL";
+            else
+                return GetSongName(s.Artist.Name, s.Name);
+        }
+
+        public static String GetSongName(String artistName, String songName)
+        {
+            return String.Format("{0}{1}{2}", artistName, String.IsNullOrEmpty(artistName) ? String.Empty : " - ", songName);
         }
     }
 }

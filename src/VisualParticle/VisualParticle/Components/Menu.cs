@@ -222,11 +222,14 @@ namespace SoundCollector.Components
                                         {
                                             Int32 indexOfSong = this._randomNineSongs.IndexOf(s);
                                             try
-                                            {                                                
+                                            {
+                                                String songName = TextUtils.GetSongName(mp.SongLibrary[s]);
+                                                songName = (String.IsNullOrEmpty(songName) || songName.Length <= Track.MAX_FULL_TEXT_LENGTH) ? songName : songName.Substring(0, Track.MAX_FULL_TEXT_LENGTH) + Track.DOTS;
+                                                songName = TextUtils.RemoveDiacritics(songName);
                                                 if (this._selectedItem == indexOfSong)
-                                                    this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, TextUtils.RemoveDiacritics(mp.SongLibrary[s].Artist.Name) + "-" + TextUtils.RemoveDiacritics(mp.SongLibrary[s].Name), new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Red);
+                                                    this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, songName, new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Red);
                                                 else
-                                                    this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, TextUtils.RemoveDiacritics(mp.SongLibrary[s].Artist.Name) + "-" + TextUtils.RemoveDiacritics(mp.SongLibrary[s].Name), new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Black);
+                                                    this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, songName, new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Black);
                                             }
                                             catch (ArgumentException)
                                             {

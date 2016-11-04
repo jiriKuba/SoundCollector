@@ -1,3 +1,4 @@
+using SoundCollector.Utils;
 using System;
 using System.Runtime.Serialization;
 
@@ -11,8 +12,9 @@ namespace SoundCollector.HelpObjects
         public String Name { get; set; }
         public Int32 Score { get; set; }
 
-        private const Int32 MAX_TEXT_NAME_LENGTH = 16;
-        private const String DOTS = "...";
+        public const Int32 MAX_TEXT_NAME_LENGTH = 18;
+        public const Int32 MAX_FULL_TEXT_LENGTH = 37;
+        public const String DOTS = "...";
 
         public Track()
         {
@@ -41,9 +43,10 @@ namespace SoundCollector.HelpObjects
 
         public override String ToString()
         {
-            String art = (String.IsNullOrEmpty(this.Artis) || this.Artis.Length <= MAX_TEXT_NAME_LENGTH) ? this.Artis : this.Artis.Substring(0, MAX_TEXT_NAME_LENGTH) + DOTS;
-            String nam = (String.IsNullOrEmpty(this.Name) || this.Name.Length <= MAX_TEXT_NAME_LENGTH) ? this.Name : this.Name.Substring(0, MAX_TEXT_NAME_LENGTH) + DOTS; ;
-            return String.Format("{0} - {1} : {2}({3})", art, nam, this.Score, this.Stat);
+            String songName = TextUtils.GetSongName(this.Artis, this.Name);
+            songName = (String.IsNullOrEmpty(songName) || songName.Length <= MAX_TEXT_NAME_LENGTH) ? songName : songName.Substring(0, MAX_TEXT_NAME_LENGTH) + Track.DOTS;
+            songName = TextUtils.RemoveDiacritics(songName);
+            return String.Format("{0} : {1}({2})", songName, this.Score, this.Stat);
         }
     }
 }
