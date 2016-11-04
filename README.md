@@ -25,8 +25,15 @@ Game is written in XNA framework (C# .NET) and uses DPSF library (http://www.xna
 
 Current version 0.9.9
 
-Known issues:
-- ~~Game is not playing next song after current song ends~~(fixed in 0.9.9)
-- Texts are sometimes too long (overflowing menu)
+**Known issues:**
+- ~~Game is not playing next song after current song ends~~ (fixed in 0.9.9)
+- ~~Texts are sometimes too long (overflowing menu)~~ (fixed in 1.0.0)
+
+**Changes:**
+- Version 0.9.9
+  - Fixed: Game is not playing next song after current song ends
+- Version 1.0.0
+  - Fixed: Texts are sometimes too long (overflowing menu)
+  - Back button is on opposite side of menu
 
 ![alt tag](http://www.itnetwork.cz/images/53403567abf3b_image_0)
