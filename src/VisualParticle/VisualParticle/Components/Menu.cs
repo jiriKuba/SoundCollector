@@ -16,10 +16,10 @@ namespace SoundCollector.Components
     {
         private List<Int32> _randomNineSongs;
         private Boolean _topTenCheck;
-        private Boolean _songArchivCheck;
+        private Boolean _randomNineCheck;
         private Boolean _indexChange;
         private Int32 _selectedItem;
-       
+
         private Int32 _width;
         private Int32 _nowWidth;
 
@@ -29,11 +29,11 @@ namespace SoundCollector.Components
         private Int32 _positionX;
         private Int32 _nowPositionX;
         private Boolean _mouseMenuPressed;
-        private readonly Dictionary<Int32, String> _menuItems;   
+        private readonly Dictionary<Int32, String> _menuItems;
         private readonly Color _menuBackgroundColor;
 
         public Menu(MainGame mainGame)
-            :base(mainGame)
+            : base(mainGame)
         {
             this._menuBackgroundColor = new Color(200, 198, 0, 200);
             this._menuItems = new Dictionary<Int32, String>();
@@ -43,7 +43,7 @@ namespace SoundCollector.Components
         {
             Random random = new Random();
             MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
-            return mp.SongLibrary.OrderBy(x => random.NextDouble()).Select(s=> mp.SongLibrary.ToList().IndexOf(s)).Take(9).ToList();
+            return mp.SongLibrary.OrderBy(x => random.NextDouble()).Select(s => mp.SongLibrary.ToList().IndexOf(s)).Take(9).ToList();
         }
 
         public void Initialize()
@@ -57,7 +57,7 @@ namespace SoundCollector.Components
             this._indexChange = false;
 
             this._topTenCheck = false;
-            this._songArchivCheck = false;
+            this._randomNineCheck = false;
 
             this._height = 350;
             this._width = 500;
@@ -68,14 +68,14 @@ namespace SoundCollector.Components
 
         public void LoadContent()
         {
-            
+
         }
 
         public void UnloadContent()
         {
             this._menuItems.Clear();
 
-            if(this._randomNineSongs != null)
+            if (this._randomNineSongs != null)
                 this._randomNineSongs.Clear();
         }
 
@@ -98,10 +98,10 @@ namespace SoundCollector.Components
                     if (this._nowHeight > this._height)
                         this._nowHeight -= 10;
                 }
-                
+
                 this._nowWidth = this._width;
-                
-                if ((!this._topTenCheck) && (!this._songArchivCheck))
+
+                if ((!this._topTenCheck) && (!this._randomNineCheck))
                 {
                     this._height = 350;
                     this._selectedItem = -1;
@@ -110,13 +110,13 @@ namespace SoundCollector.Components
                         if (new Rectangle(this._mainGame.MainViewport.Width / 2 - this._width / 2, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * mi.Key, this._width, 60).Contains(new Rectangle(ih.ActualMouseState.X, ih.ActualMouseState.Y, 1, 1)))
                         {
                             this._selectedItem = mi.Key;
-                        }                        
+                        }
                     }
 
                 }
                 else
                 {
-                    if (this._songArchivCheck)
+                    if (this._randomNineCheck)
                     {
                         this._height = 500;
                         if (!this._indexChange)
@@ -135,22 +135,20 @@ namespace SoundCollector.Components
                         if (new Rectangle(this._mainGame.MainViewport.Width / 2 - this._width / 2, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9, this._width, 60).Contains(new Rectangle(ih.ActualMouseState.X, ih.ActualMouseState.Y, 1, 1)))
                             this._selectedItem = 9;
 
+                        //next
                         if (new Rectangle(this._mainGame.MainViewport.Width / 2, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9, this._width, 60).Contains(new Rectangle(ih.ActualMouseState.X, ih.ActualMouseState.Y, 1, 1)))
                             this._selectedItem = 10;
                     }
-                    else
+                    else if (this._topTenCheck)
                     {
-                        if (this._topTenCheck)
-                        {
-                            this._height = 500;
-                            if (new Rectangle(this._mainGame.MainViewport.Width / 2, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 41 * 9, this._width, 60).Contains(new Rectangle(ih.ActualMouseState.X, ih.ActualMouseState.Y, 1, 1)))
-                                this._selectedItem = 0;
-                            else
-                                this._selectedItem = -1;
-                        }
+                        this._height = 500;
+                        if (new Rectangle(this._mainGame.MainViewport.Width / 2 - this._width / 2, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9, this._width, 60).Contains(new Rectangle(ih.ActualMouseState.X, ih.ActualMouseState.Y, 1, 1)))
+                            this._selectedItem = 0;
+                        else
+                            this._selectedItem = -1;
                     }
                 }
-                
+
                 if (ih.ActualMouseState.LeftButton == ButtonState.Pressed && !this._mouseMenuPressed)
                 {
                     this.MenuClick(this._selectedItem);
@@ -176,7 +174,7 @@ namespace SoundCollector.Components
 
                     if (mp.SongLibrary != null && mp.SongLibrary.Count > 0)
                     {
-                        if ((!this._topTenCheck) && (!this._songArchivCheck))
+                        if ((!this._topTenCheck) && (!this._randomNineCheck))
                         {
                             foreach (KeyValuePair<Int32, String> mi in this._menuItems)
                             {
@@ -204,17 +202,17 @@ namespace SoundCollector.Components
                                     catch (ArgumentException)
                                     {
                                         trackIterator++;
-                                    }                                    
+                                    }
                                 }
 
                                 if (this._selectedItem == 0)
-                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 1.7f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 41 * 9), Color.Red);
+                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 41 * 9), Color.Red);
                                 else
-                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 1.7f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 41 * 9), Color.Black);
+                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 41 * 9), Color.Black);
                             }
                             else
                             {
-                                if (this._songArchivCheck)
+                                if (this._randomNineCheck)
                                 {
                                     if (this._randomNineSongs != null && this._randomNineSongs.Count > 0)
                                     {
@@ -239,15 +237,14 @@ namespace SoundCollector.Components
                                     }
 
                                     if (this._selectedItem == 9)
-                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Next list", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Red);
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Red);
                                     else
-                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Next list", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Black);
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Black);
 
                                     if (this._selectedItem == 10)
-                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 1.7f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Red);
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Next list", new Vector2(this._mainGame.MainViewport.Width / 1.8f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Red);
                                     else
-                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Back", new Vector2(this._mainGame.MainViewport.Width / 1.7f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Black);
-
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, "Next list", new Vector2(this._mainGame.MainViewport.Width / 1.8f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * 9), Color.Black);
                                 }
 
                             }
@@ -272,7 +269,7 @@ namespace SoundCollector.Components
             GameLogic gl = this._mainGame.GameManager.GetComponent<GameLogic>();
             IEnumerable<Track> tracks = mp.SongArchive.GetTopTen();
 
-            if ((!this._songArchivCheck) && (!this._topTenCheck))
+            if ((!this._randomNineCheck) && (!this._topTenCheck))
             {
                 this._height = 500;
                 switch (clickedIndex)
@@ -289,49 +286,42 @@ namespace SoundCollector.Components
                         this._topTenCheck = true;
                         break;
                     case 3:
-                        this._songArchivCheck = true;
+                        this._randomNineCheck = true;
                         break;
                     case 4:
                         this._mainGame.Exit();
                         break;
                 }
             }
-            else
+            else if (this._randomNineCheck)
             {
-
-                if (this._songArchivCheck)
+                mp.SetMediaPlayerShuffled(false);
+                if (clickedIndex < 9)
                 {
-                    mp.SetMediaPlayerShuffled(false);
-                    if (clickedIndex < 9)
-                    {
-                        mp.PlaySongByIndex(this._randomNineSongs[clickedIndex]);
-                    }
+                    mp.PlaySongByIndex(this._randomNineSongs[clickedIndex]);
+                }
 
-                    if (clickedIndex == 9)
-                    {
-                        this._indexChange = false;
-                        mp.PauseSong();
-                    }
-                    else
-                    {
-                        if (clickedIndex == 10)
-                        {
-                            this._height = 350;
-                            this._songArchivCheck = false;
-                        }
-                        else
-                        {
-                            gl.PauseGame();
-                        }
-                    }
+                if (clickedIndex == 10)
+                {
+                    this._indexChange = false;
+                    mp.PauseSong();
+                }
+                else if (clickedIndex == 9)
+                {
+                    this._height = 350;
+                    this._randomNineCheck = false;
                 }
                 else
                 {
-                    if (this._topTenCheck)
-                    {
-                        this._height = 350;
-                        this._topTenCheck = false;
-                    }
+                    gl.PauseGame();
+                }
+            }
+            else
+            {
+                if (this._topTenCheck)
+                {
+                    this._height = 350;
+                    this._topTenCheck = false;
                 }
             }
         }
