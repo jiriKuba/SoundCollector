@@ -35,5 +35,8 @@ Current version 1.0.0
 - Version 1.0.0
   - Fixed: Texts are sometimes too long (overflowing menu)
   - Back button is on opposite side of menu
+  
+**Install**
+Installation is powered by WiX XNA: http://xnainstaller.codeplex.com/
 
 ![alt tag](http://www.itnetwork.cz/images/53403567abf3b_image_0)
