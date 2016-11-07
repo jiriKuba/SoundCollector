@@ -28,6 +28,8 @@ Current version 1.0.0
 **Known issues:**
 - ~~Game is not playing next song after current song ends~~ (fixed in 0.9.9)
 - ~~Texts are sometimes too long (overflowing menu)~~ (fixed in 1.0.0)
+- Game crashes when loses focus
+- Menu layout problem when resolution > HD
 
 **Changes:**
 - Version 0.9.9
