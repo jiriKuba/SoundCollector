@@ -27,13 +27,13 @@ Project can be opened in Visual Studio
 
 Game is written in XNA framework (C# .NET) and uses DPSF library (http://www.xnaparticles.com/) 
 
-Current version 1.0.0
+Current version 1.0.1
 
 **Known issues:**
 - ~~Game is not playing next song after current song ends~~ (fixed in 0.9.9)
 - ~~Texts are sometimes too long (overflowing menu)~~ (fixed in 1.0.0)
 - Game crashes when loses focus
-- Menu layout problem when resolution > HD
+- ~~Menu layout problem when resolution > HD~~ (fixed in 1.0.1)
 
 **Changes:**
 - Version 0.9.9
@@ -41,6 +41,8 @@ Current version 1.0.0
 - Version 1.0.0
   - Fixed: Texts are sometimes too long (overflowing menu)
   - Back button is on opposite side of menu
+- Version 1.0.1
+  - Fixed: Menu layout problem
   
 **Install**
 
