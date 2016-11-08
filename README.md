@@ -7,6 +7,10 @@ Shield is down = Game over
 
 Score multiplier = Shield value / 10
 
+Demo:
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/bX6bv9lACiQ/0.jpg)](http://www.youtube.com/watch?v=bX6bv9lACiQ)
+
 Control:
 - Particles are collected by mouse (fast movement attracts particles)
 - Left mouse button (press) turns on "Bonus Lux"
