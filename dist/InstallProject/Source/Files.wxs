@@ -16,7 +16,7 @@
       -->
       <Directory Id='ProgramMenuFolder' Name='Programs'>
         <Directory Id='MyGameProgramMenuFolder' Name='SoundCollector'>
-          <Component Id="StartMenuEntriesComponent" Guid="7dd2e0a1-d1c1-4e21-8618-a387db2ab908" DiskId="1">
+          <Component Id="StartMenuEntriesComponent" Guid="83a1eb1d-2d6a-4f2d-bb7d-4bdd1b180ac2" DiskId="1">
             <RemoveFolder Id='MyGameProgramMenuFolder' On='uninstall' />          
             <RegistryValue
               Root='HKCU'
@@ -46,7 +46,7 @@
         <Directory Id="INSTALLDIR" Name="SoundCollector">
 
           <Directory Id="ContentDir" Name="Content">
-            <Component Id="SoundCollectorAssets" Guid="6f194b92-ff44-4fa1-9907-4ee4554d4ed9" DiskId="1">
+            <Component Id="SoundCollectorAssets" Guid="e590acd6-7fb2-40ee-a21c-5f60fbfb8121" DiskId="1">
               <File Id="Ball" Name="ball.xnb" Source="$(sys.SOURCEFILEDIR)/../Content/Content/ball.xnb" />
               <File Id="Bigger" Name="Bigger.xnb" Source="$(sys.SOURCEFILEDIR)/../Content/Content/Bigger.xnb" />
               <File Id="blank" Name="blank.xnb" Source="$(sys.SOURCEFILEDIR)/../Content/Content/blank.xnb" />
@@ -77,7 +77,7 @@
             example, two features named "game" and "editor" could be imagined where
             both point to the "shared" component and to their own component.
           -->
-          <Component Id="SoundCollectorComponent" Guid="7ce24743-2ff2-43ba-bda0-bdc18c8cd50b" DiskId="1">
+          <Component Id="SoundCollectorComponent" Guid="9ef82acf-89af-4a56-8de4-29688fe1f58a" DiskId="1">
             <File
               Id="LicenseFile" Name="license.rtf"
               Source="$(sys.SOURCEFILEDIR)/../Documents/license.rtf"

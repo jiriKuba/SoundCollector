@@ -10,11 +10,11 @@
     http://wix.sourceforge.net/manual-wix2/wix_xsd_product.htm
   -->
   <Product
-    Id="09b5359c-ac7a-42fa-8bfd-50f6422fbbf2"
+    Id="d9ed1424-32c3-4bc3-a727-c9bb839528d8"
     Name="SoundCollector"
     Language="1033"
-    Version="1.0.0.0"
-    UpgradeCode="0446cf06-0150-434a-872b-fb7a5514c71a"
+    Version="1.0.2.0"
+    UpgradeCode="3861b5b1-48e1-42f4-ae38-32673ed4ac9c"
     Manufacturer="KubaGames"
   >
 
