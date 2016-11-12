@@ -51,4 +51,6 @@ Current version 1.0.2
 
 Installation is powered by WiX XNA: http://xnainstaller.codeplex.com/
 
-![alt tag](http://www.itnetwork.cz/images/53403567abf3b_image_0)
+![alt text][logo]
+
+[logo]: https://github.com/jiriKuba/SoundCollector/blob/master/SoundCollectorScreenshot.jpg "Screenshot"
