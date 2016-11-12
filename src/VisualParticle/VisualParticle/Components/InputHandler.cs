@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 namespace SoundCollector.Components
 {
     class InputHandler : Base.BaseGameComponent, IExtendedGameComponent
-    {    
+    {
         public KeyboardState ActualKeyboardState { get; private set; }
         public KeyboardState PreviouslyKeyboardState { get; private set; }
         public MouseState ActualMouseState { get; private set; }
@@ -22,7 +22,7 @@ namespace SoundCollector.Components
         public event EventHandler<EventArgs> GamePadBackPressed;
 
         public InputHandler(MainGame mainGame)
-            :base(mainGame)
+            : base(mainGame)
         {
 
         }
@@ -53,39 +53,39 @@ namespace SoundCollector.Components
             {
                 this.ActualKeyboardState = Keyboard.GetState();
                 this.ActualMouseState = Mouse.GetState();
-            }
 
-            if ((this.ActualKeyboardState.IsKeyDown(Keys.Escape)) && (this.PreviouslyKeyboardState != this.ActualKeyboardState))
-            {
-                if (this.EscapePressed != null)
-                    this.EscapePressed.Invoke(null, EventArgs.Empty);
-
-                this.PreviouslyKeyboardState = this.ActualKeyboardState;
-            }
-            if (this.ActualKeyboardState.GetPressedKeys().Count() == 0)
-                this.PreviouslyKeyboardState = Keyboard.GetState();
-
-            if (!this._mainGame.IsPaused)
-            {
-
-                // Allows the game to exit
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                if ((this.ActualKeyboardState.IsKeyDown(Keys.Escape)) && (this.PreviouslyKeyboardState != this.ActualKeyboardState))
                 {
-                    if (this.GamePadBackPressed != null)
-                        this.GamePadBackPressed.Invoke(null, EventArgs.Empty);
-                }
-
-                //next song
-                if ((this.ActualKeyboardState.IsKeyDown(Keys.Space)) && (this.PreviouslyKeyboardState != this.ActualKeyboardState))
-                {
-                    if (this.SpacePressed != null)
-                        this.SpacePressed.Invoke(null, EventArgs.Empty);
+                    if (this.EscapePressed != null)
+                        this.EscapePressed.Invoke(null, EventArgs.Empty);
 
                     this.PreviouslyKeyboardState = this.ActualKeyboardState;
                 }
-                if (this.ActualKeyboardState.IsKeyUp(Keys.Space))
-                {
+                if (this.ActualKeyboardState.GetPressedKeys().Count() == 0)
                     this.PreviouslyKeyboardState = Keyboard.GetState();
+
+                if (!this._mainGame.IsPaused)
+                {
+
+                    // Allows the game to exit
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                    {
+                        if (this.GamePadBackPressed != null)
+                            this.GamePadBackPressed.Invoke(null, EventArgs.Empty);
+                    }
+
+                    //next song
+                    if ((this.ActualKeyboardState.IsKeyDown(Keys.Space)) && (this.PreviouslyKeyboardState != this.ActualKeyboardState))
+                    {
+                        if (this.SpacePressed != null)
+                            this.SpacePressed.Invoke(null, EventArgs.Empty);
+
+                        this.PreviouslyKeyboardState = this.ActualKeyboardState;
+                    }
+                    if (this.ActualKeyboardState.IsKeyUp(Keys.Space))
+                    {
+                        this.PreviouslyKeyboardState = Keyboard.GetState();
+                    }
                 }
             }
         }

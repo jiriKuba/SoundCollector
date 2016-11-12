@@ -115,11 +115,14 @@ namespace SoundCollector.Components
                 }
 
                 this.AvarageFrequency = 0f;
-                for (int i = 0; i < this.VisualizationData.Frequencies.Count; i++)
+                if (this.VisualizationData != null && this.VisualizationData.Frequencies != null && this.VisualizationData.Frequencies.Count > 0)
                 {
-                    this.AvarageFrequency += this.VisualizationData.Frequencies[i];
+                    for (int i = 0; i < this.VisualizationData.Frequencies.Count; i++)
+                    {
+                        this.AvarageFrequency += this.VisualizationData.Frequencies[i];
+                    }
+                    this.AvarageFrequency = this.AvarageFrequency / this.VisualizationData.Frequencies.Count;
                 }
-                this.AvarageFrequency = this.AvarageFrequency / this.VisualizationData.Frequencies.Count;
             }
         }
 
@@ -152,7 +155,8 @@ namespace SoundCollector.Components
 
         public void PlaySongByIndex(Int32 index)
         {
-            MediaPlayer.Play(this.SongLibrary, index);
+            if (index >= 0 && this.MediaLibrary.Songs != null && this.MediaLibrary.Songs.Count > 0 && index < this.MediaLibrary.Songs.Count)
+                MediaPlayer.Play(this.SongLibrary, index);
         }
 
         public String GetActiveSongName()

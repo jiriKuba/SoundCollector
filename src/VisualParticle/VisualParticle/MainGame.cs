@@ -39,8 +39,9 @@ namespace SoundCollector
             this.SettingService = new SettingService();
 
             //is this nessacery?
-            this.MainViewport.MaxDepth = 200;
-            this.MainViewport.MinDepth = -200;
+            //noooo
+            //this.MainViewport.MaxDepth = 200;
+            //this.MainViewport.MinDepth = -200;
 
             //window setting
             this.Content.RootDirectory = "Content";
@@ -54,7 +55,7 @@ namespace SoundCollector
             this.IsPaused = true;
             this.MainCameraPosition = new Vector3(0, 0, -200); //start position    
             this.IsMouseVisible = true;
-            
+
             this.GameManager = new GameManager(this);
             this.GameManager.AddComponent(new BackColorer(this));
             this.GameManager.AddComponent(new InputHandler(this));
@@ -62,8 +63,8 @@ namespace SoundCollector
             this.GameManager.AddComponent(new MusicPlayer(this));
             this.GameManager.AddComponent(new Player(this));
             this.GameManager.AddComponent(new ParticleSystems(this));
-            this.GameManager.AddComponent(new Menu(this));            
-            this.GameManager.AddComponent(new DynamicWorldCounter(this));            
+            this.GameManager.AddComponent(new Menu(this));
+            this.GameManager.AddComponent(new DynamicWorldCounter(this));
             this.GameManager.AddComponent(new StatusMaker(this));
             this.GameManager.AddComponent(new GameLogic(this));
         }
@@ -83,7 +84,7 @@ namespace SoundCollector
             this.Graphics.ApplyChanges();
 
             this.MainViewport = this.Graphics.GraphicsDevice.Viewport;
-            this.OneSecond = TimeSpan.FromSeconds(0.1);            
+            this.OneSecond = TimeSpan.FromSeconds(0.1d);
             this.GameManager.Initialize();
             base.Initialize();
         }
@@ -121,8 +122,11 @@ namespace SoundCollector
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            this.MainViewport = this.Graphics.GraphicsDevice.Viewport;
+            if(this.IsActive)
+                this.MainViewport = this.Graphics.GraphicsDevice.Viewport;
+
             this.GameManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -132,9 +136,12 @@ namespace SoundCollector
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            this.MainSpriteBatch.Begin();
-            this.GameManager.Draw(gameTime);
-            this.MainSpriteBatch.End();
+            if (this.IsActive)
+            {
+                this.MainSpriteBatch.Begin();
+                this.GameManager.Draw(gameTime);
+                this.MainSpriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }

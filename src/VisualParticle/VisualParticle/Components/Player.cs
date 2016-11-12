@@ -36,8 +36,7 @@ namespace SoundCollector.Components
         }
 
         public void Initialize()
-        {
-            this.Circle = DrawUtils.CreateCircle(Size + MinSize, this._mainGame.GraphicsDevice);
+        {            
             this.ReInit();
         }
 
@@ -49,18 +48,21 @@ namespace SoundCollector.Components
 
         public void LoadContent()
         {
-            
+            this.Circle = DrawUtils.CreateCircle(this.Size + this.MinSize, this._mainGame.GraphicsDevice);
         }
 
         public void UnloadContent()
         {
-            this.Circle.Dispose();
+            if (this.Circle != null)
+                this.Circle.Dispose();
         }
 
         public void Update(GameTime gameTime)
         {
-            this.Circle.Dispose();
-            this.Circle = DrawUtils.CreateCircle(Size + MinSize, this._mainGame.GraphicsDevice);
+            if (this.Circle != null)
+                this.Circle.Dispose();
+            
+            this.Circle = DrawUtils.CreateCircle(this.Size + this.MinSize, this._mainGame.GraphicsDevice);
             this.Size = Shield;
 
             if (!this._mainGame.IsPaused)

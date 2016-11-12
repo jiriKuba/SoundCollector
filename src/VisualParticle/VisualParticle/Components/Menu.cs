@@ -170,19 +170,21 @@ namespace SoundCollector.Components
                 this._mainGame.MainSpriteBatch.Draw(rc.MenuBackground, new Rectangle(this.GetMenuX(), this._nowPositionY, this._nowWidth, this._nowHeight), this._menuBackgroundColor);
                 if (this._nowHeight == this._height && this._nowPositionY <= this._positionY)
                 {
-
                     if (mp.SongLibrary != null && mp.SongLibrary.Count > 0)
                     {
                         if ((!this._topTenCheck) && (!this._randomNineCheck))
                         {
-                            foreach (KeyValuePair<Int32, String> mi in this._menuItems)
+                            if (this._menuItems != null && this._menuItems.Count > 0)
                             {
-                                if (this._selectedItem == mi.Key)
-                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, mi.Value, new Vector2(this.GetMenuX() + 145, this._nowPositionY + 60 + 40 * mi.Key), Color.Red);
-                                else
-                                    this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, mi.Value, new Vector2(this.GetMenuX() + 145, this._nowPositionY + 60 + 40 * mi.Key), Color.Black);
+                                foreach (KeyValuePair<Int32, String> mi in this._menuItems)
+                                {
+                                    if (this._selectedItem == mi.Key)
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, mi.Value, new Vector2(this.GetMenuX() + 145, this._nowPositionY + 60 + 40 * mi.Key), Color.Red);
+                                    else
+                                        this._mainGame.MainSpriteBatch.DrawString(rc.BiggerFont, mi.Value, new Vector2(this.GetMenuX() + 145, this._nowPositionY + 60 + 40 * mi.Key), Color.Black);
 
-                                //i++;
+                                    //i++;
+                                }
                             }
                             //this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, "now playing: " + title, new Vector2(this._mainGame.MainViewport.Width / 2 - Width / 2, this._mainGame.MainViewport.Height / 2 + Height / 2 - 50), Color.Purple);
                         }
@@ -191,16 +193,19 @@ namespace SoundCollector.Components
                             if (this._topTenCheck)
                             {
                                 Int32 trackIterator = 0;
-                                foreach (Track t in tracks)
+                                if (tracks != null && tracks.Any())
                                 {
-                                    try
+                                    foreach (Track t in tracks)
                                     {
-                                        this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, TextUtils.RemoveDiacritics(t.ToString()), new Vector2(this.GetMenuX() + 15, this._nowPositionY + 60 + 40 * trackIterator), Color.Black);
-                                        trackIterator++;
-                                    }
-                                    catch (ArgumentException)
-                                    {
-                                        trackIterator++;
+                                        try
+                                        {
+                                            this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, TextUtils.RemoveDiacritics(t.ToString()), new Vector2(this.GetMenuX() + 15, this._nowPositionY + 60 + 40 * trackIterator), Color.Black);
+                                            trackIterator++;
+                                        }
+                                        catch (ArgumentException)
+                                        {
+                                            trackIterator++;
+                                        }
                                     }
                                 }
 
@@ -216,10 +221,10 @@ namespace SoundCollector.Components
                                     if (this._randomNineSongs != null && this._randomNineSongs.Count > 0)
                                     {
                                         foreach (Int32 s in this._randomNineSongs)
-                                        {
-                                            Int32 indexOfSong = this._randomNineSongs.IndexOf(s);
+                                        {                                            
                                             try
                                             {
+                                                Int32 indexOfSong = this._randomNineSongs.IndexOf(s);
                                                 String songName = TextUtils.GetSongName(mp.SongLibrary[s]);
                                                 songName = (String.IsNullOrEmpty(songName) || songName.Length <= Track.MAX_FULL_TEXT_LENGTH) ? songName : songName.Substring(0, Track.MAX_FULL_TEXT_LENGTH) + Track.DOTS;
                                                 songName = TextUtils.RemoveDiacritics(songName);
@@ -228,7 +233,7 @@ namespace SoundCollector.Components
                                                 else
                                                     this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, songName, new Vector2(this.GetMenuX() + 15, this._nowPositionY + 60 + 40 * indexOfSong), Color.Black);
                                             }
-                                            catch (ArgumentException)
+                                            catch 
                                             {
                                                 //nothing
                                                 //this._mainGame.MainSpriteBatch.DrawString(rc.ScoreFont, "Wrong character", new Vector2(this._mainGame.MainViewport.Width / 3f, this._mainGame.MainViewport.Height / 2 - this._height / 2 + 60 + 40 * indexOfSong), Color.Black);
@@ -330,6 +335,5 @@ namespace SoundCollector.Components
         {
             return this._mainGame.MainViewport.Width / 2 - this._width / 2;
         }
-
     }
 }

@@ -106,13 +106,16 @@ namespace SoundCollector.Components
 
         public void Update(GameTime gameTime)
         {
-            MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
-            if (gameTime.TotalGameTime - this._prevMusicTime > mp.MusicTick)
+            if (!this._mainGame.IsPaused)
             {
-                if (this.StatusShowTime > 0)
-                    this.StatusShowTime--;
+                MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
+                if (gameTime.TotalGameTime - this._prevMusicTime > mp.MusicTick)
+                {
+                    if (this.StatusShowTime > 0)
+                        this.StatusShowTime--;
 
-                this._prevMusicTime = gameTime.TotalGameTime;
+                    this._prevMusicTime = gameTime.TotalGameTime;
+                }
             }
         }
 

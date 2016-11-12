@@ -23,6 +23,14 @@ namespace SoundCollector.Components
     {
         private readonly List<IExtendedGameComponent> _components;
 
+        public Boolean AreAnyComponents
+        {
+            get
+            {
+                return this._components != null && this._components.Count > 0;
+            }
+        }
+
         public GameManager(MainGame mainGame)
             :base(mainGame)
         {
@@ -35,52 +43,70 @@ namespace SoundCollector.Components
         }
 
         public void Initialize()
-        {    
-            foreach (IExtendedGameComponent c in this._components)
+        {
+            if (this.AreAnyComponents)
             {
-                c.Initialize();
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    c.Initialize();
+                }
             }
         }
 
         public void LoadContent()
         {
-            foreach (IExtendedGameComponent c in this._components)
+            if (this.AreAnyComponents)
             {
-                c.LoadContent();
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    c.LoadContent();
+                }
             }
         }
 
         public void UnloadContent()
         {
-            foreach (IExtendedGameComponent c in this._components)
+            if (this.AreAnyComponents)
             {
-                c.UnloadContent();
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    c.UnloadContent();
+                }
+                this._components.Clear();
             }
-            this._components.Clear();
         }
 
         public void Update(GameTime gameTime)
         {
-            foreach (IExtendedGameComponent c in this._components)
+            if (this.AreAnyComponents)
             {
-                c.Update(gameTime);
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    c.Update(gameTime);
+                }
             }
         }
 
         public void Draw(GameTime gameTime)
         {
-            foreach (IExtendedGameComponent c in this._components)
+            if (this.AreAnyComponents)
             {
-                c.Draw(gameTime);
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    c.Draw(gameTime);
+                }
             }
         }
 
         public T GetComponent<T>() where T : IExtendedGameComponent
         {
-            foreach (IExtendedGameComponent c in this._components)
+            if (this.AreAnyComponents)
             {
-                if (c is T)
-                    return (T)c;
+                foreach (IExtendedGameComponent c in this._components)
+                {
+                    if (c is T)
+                        return (T)c;
+                }
             }
 
             return default(T);

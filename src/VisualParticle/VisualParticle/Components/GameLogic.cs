@@ -258,8 +258,11 @@ namespace SoundCollector.Components
             if (!this._mainGame.IsActive)
             {
                 this._mainGame.ResetElapsedTime();
-                this._mainGame.IsPaused = false;
-                this.PauseGame();
+
+                if (!this._mainGame.IsPaused)
+                {
+                    this.PauseGame();
+                }
             }
 
             if (!this._mainGame.IsPaused)

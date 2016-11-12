@@ -45,6 +45,9 @@ namespace SoundCollector.Components
         private Int32 _particleDeflection;
         private const float PARTICLE_SPACE = 2.4f;
         private const float PARTICLE_DEAD_TIME = 0.0000001f;
+        private const Int32 PARTICLE_OUTSIDE_AREA = 20;
+
+        private const Int32 EMITTER_DISTANCE = 55;
 
         public ParticleSystems(MainGame mainGame)
             :base(mainGame)
@@ -55,23 +58,23 @@ namespace SoundCollector.Components
         public void Draw(GameTime gameTime)
         {
             MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
+            
+            if (this.OutsideCircle != null)
+            {
+                if (mp.AvarageFrequency < 0.5f)
+                {
+                    this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos1.X - this._bannedOutsideCircleArea, this.EmitterRealPos1.Y - this._bannedOutsideCircleArea), Color.Black);
+                    this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos2OterColor.X - this._bannedOutsideCircleArea, this.EmitterRealPos2OterColor.Y - this._bannedOutsideCircleArea), Color.Black);
+                }
+                else
+                {
+                    this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos1.X - this._bannedOutsideCircleArea, this.EmitterRealPos1.Y - this._bannedOutsideCircleArea), Color.Purple);
+                    this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos2OterColor.X - this._bannedOutsideCircleArea, this.EmitterRealPos2OterColor.Y - this._bannedOutsideCircleArea), Color.Purple);
+                }
+            }
 
             this._mcParticleSystem.Draw();
             this._mcParticleSystemOterColor.Draw();
-
-            //this._mainGame.MainSpriteBatch.Begin();
-            if (mp.AvarageFrequency < 0.5f)
-            {
-                this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos1.X - this._bannedOutsideCircleArea, this.EmitterRealPos1.Y - this._bannedOutsideCircleArea), Color.Black);
-                this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos2OterColor.X - this._bannedOutsideCircleArea, this.EmitterRealPos2OterColor.Y - this._bannedOutsideCircleArea), Color.Black);
-            }
-            else
-            {
-                this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos1.X - this._bannedOutsideCircleArea, this.EmitterRealPos1.Y - this._bannedOutsideCircleArea), Color.Purple);
-                this._mainGame.MainSpriteBatch.Draw(this.OutsideCircle, new Vector2(this.EmitterRealPos2OterColor.X - this._bannedOutsideCircleArea, this.EmitterRealPos2OterColor.Y - this._bannedOutsideCircleArea), Color.Purple);
-            }
-                        
-            //this._mainGame.MainSpriteBatch.End();
         }
 
         public void Initialize()
@@ -105,21 +108,13 @@ namespace SoundCollector.Components
         {
             this._mcParticleSystem.Destroy();
             this._mcParticleSystemOterColor.Destroy();
-            this.OutsideCircle.Dispose();
+
+            if (this.OutsideCircle != null)
+                this.OutsideCircle.Dispose();
         }
 
         public void Update(GameTime gameTime)
         {
-            MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
-            InputHandler ih = this._mainGame.GameManager.GetComponent<InputHandler>();
-
-            this._bannedOutsideCircleArea = (int)(Math.Exp(mp.AvarageFrequency * 8.4f));
-
-            if(this.OutsideCircle != null)
-                this.OutsideCircle.Dispose();
-
-            this.OutsideCircle = DrawUtils.CreateCircle(this._bannedOutsideCircleArea, this._mainGame.GraphicsDevice);
-
             if (!this._mainGame.IsActive)
             {
                 this._mcParticleSystemOterColor.Game.ResetElapsedTime();
@@ -128,6 +123,16 @@ namespace SoundCollector.Components
 
             if (!this._mainGame.IsPaused)
             {
+                MusicPlayer mp = this._mainGame.GameManager.GetComponent<MusicPlayer>();
+                InputHandler ih = this._mainGame.GameManager.GetComponent<InputHandler>();
+
+                this._bannedOutsideCircleArea = (Int32)(Math.Exp(mp.AvarageFrequency * 8.4f));
+
+                if (this.OutsideCircle != null)
+                    this.OutsideCircle.Dispose();
+
+                this.OutsideCircle = DrawUtils.CreateCircle(this._bannedOutsideCircleArea, this._mainGame.GraphicsDevice);
+
                 DynamicWorldCounter dwc = this._mainGame.GameManager.GetComponent<DynamicWorldCounter>();
 
                 Matrix rot = Matrix.CreateRotationZ(dwc.ZRotationAngle);
@@ -203,7 +208,6 @@ namespace SoundCollector.Components
                     this._mcParticleSystem.BonusShield(this._mouse3d);
                     this._mcParticleSystemOterColor.BonusShield(this._mouse3d);
                     this.BonusFieldActive = true;
-
                 }
 
                 if ((ih.ActualMouseState.RightButton == ButtonState.Released) && (this.BonusFieldActive))
@@ -229,10 +233,10 @@ namespace SoundCollector.Components
                 }
 
                 //emitters position
-                this._mcParticleSystem.Emitter.PositionData.Position = new Vector3(-55, 55, 0);
+                this._mcParticleSystem.Emitter.PositionData.Position = new Vector3((-1) * EMITTER_DISTANCE, EMITTER_DISTANCE, 0);
                 this.EmitterRealPos1 = this._mainGame.MainViewport.Project(this._mcParticleSystem.Emitter.PositionData.Position, this._mcParticleSystem.Projection, this._mcParticleSystem.View, this._mcParticleSystem.World);
 
-                this._mcParticleSystemOterColor.Emitter.PositionData.Position = new Vector3(55, -55, 0);
+                this._mcParticleSystemOterColor.Emitter.PositionData.Position = new Vector3(EMITTER_DISTANCE, (-1) * EMITTER_DISTANCE, 0);
                 this.EmitterRealPos2OterColor = this._mainGame.MainViewport.Project(this._mcParticleSystemOterColor.Emitter.PositionData.Position, this._mcParticleSystem.Projection, this._mcParticleSystem.View, this._mcParticleSystem.World);
 
                 if (this._zRotationOfEmitter >= 360)
@@ -306,51 +310,54 @@ namespace SoundCollector.Components
         private void ParticleForEach(DefaultTexturedQuadParticleSystemTemplate localParticleSystem, float avarage)
         {
             Player player = this._mainGame.GameManager.GetComponent<Player>();
-            foreach (DefaultQuadParticle particle in localParticleSystem.ActiveParticles)
+            if(player != null && localParticleSystem != null && localParticleSystem.ActiveParticles != null && localParticleSystem.ActiveParticles.Count > 0)
             {
-                particle.Size = avarage * 15f;
-
-                Vector3 paticlePosition = this._mainGame.MainViewport.Project(particle.Position, localParticleSystem.Projection, localParticleSystem.View, localParticleSystem.World);
-
-                //shield
-                if ((new Rectangle((int)(this._mainGame.MainViewport.Width / 2 - player.Shield), (int)(this._mainGame.MainViewport.Height / 2 - player.Shield), player.GetCircleWidth(), player.GetCircleHeight()).Contains(new Rectangle((int)(paticlePosition.X - 12), (int)(paticlePosition.Y - 12), (int)(12), (int)(12)))) ||
-                (new Rectangle((int)(this._mainGame.MainViewport.Width / 2 - player.Shield), (int)(this._mainGame.MainViewport.Height / 2 - player.Shield), player.GetCircleWidth(), player.GetCircleHeight()).Contains(new Rectangle((int)(paticlePosition.X + 12), (int)(paticlePosition.Y + 12), (int)(12), (int)(12)))))
+                foreach (DefaultQuadParticle particle in localParticleSystem.ActiveParticles)
                 {
-                    particle.Lifetime = PARTICLE_DEAD_TIME;
+                    particle.Size = avarage * 15f;
 
-                    if (this.ParticleHitPlayer != null)
-                        this.ParticleHitPlayer.Invoke(player, EventArgs.Empty);
-                }
+                    Vector3 paticlePosition = this._mainGame.MainViewport.Project(particle.Position, localParticleSystem.Projection, localParticleSystem.View, localParticleSystem.World);
 
-                if ((paticlePosition.X > this._mainGame.MainViewport.Width + 20) || (paticlePosition.X < -20))
-                {
-                    particle.Lifetime = PARTICLE_DEAD_TIME;
-                    //particlesPerGame++;
-                    if (this.ParticleOutOfScreen != null)
-                        this.ParticleOutOfScreen.Invoke(null, EventArgs.Empty);
-
-                }
-
-                if ((paticlePosition.Y > this._mainGame.MainViewport.Height + 20) || (paticlePosition.Y < -20))
-                {
-                    particle.Lifetime = PARTICLE_DEAD_TIME;
-                    //particlesPerGame++;
-                    if (this.ParticleOutOfScreen != null)
-                        this.ParticleOutOfScreen.Invoke(null, EventArgs.Empty);
-                }
-
-                //projection paticle on canvas
-                if (particle.Visible)
-                {
-                    if ((this._activeMousePosition.X >= paticlePosition.X - particle.Width * PARTICLE_SPACE) && (this._activeMousePosition.X <= paticlePosition.X + particle.Width * PARTICLE_SPACE))
+                    //shield
+                    if ((new Rectangle((int)(this._mainGame.MainViewport.Width / 2 - player.Shield), (int)(this._mainGame.MainViewport.Height / 2 - player.Shield), player.GetCircleWidth(), player.GetCircleHeight()).Contains(new Rectangle((int)(paticlePosition.X - 12), (int)(paticlePosition.Y - 12), (int)(12), (int)(12)))) ||
+                    (new Rectangle((int)(this._mainGame.MainViewport.Width / 2 - player.Shield), (int)(this._mainGame.MainViewport.Height / 2 - player.Shield), player.GetCircleWidth(), player.GetCircleHeight()).Contains(new Rectangle((int)(paticlePosition.X + 12), (int)(paticlePosition.Y + 12), (int)(12), (int)(12)))))
                     {
-                        if ((this._activeMousePosition.Y <= paticlePosition.Y + particle.Height * PARTICLE_SPACE) && (this._activeMousePosition.Y >= paticlePosition.Y - particle.Height * PARTICLE_SPACE))
-                        {
-                            particle.Visible = false;
-                            particle.Lifetime = PARTICLE_DEAD_TIME;
+                        particle.Lifetime = PARTICLE_DEAD_TIME;
 
-                            if (this.ParticleHitMouse != null)
-                                this.ParticleHitMouse.Invoke(player, EventArgs.Empty);
+                        if (this.ParticleHitPlayer != null)
+                            this.ParticleHitPlayer.Invoke(player, EventArgs.Empty);
+                    }
+
+                    if ((paticlePosition.X > this._mainGame.MainViewport.Width + PARTICLE_OUTSIDE_AREA) || (paticlePosition.X < (-1) * PARTICLE_OUTSIDE_AREA))
+                    {
+                        particle.Lifetime = PARTICLE_DEAD_TIME;
+                        //particlesPerGame++;
+                        if (this.ParticleOutOfScreen != null)
+                            this.ParticleOutOfScreen.Invoke(null, EventArgs.Empty);
+
+                    }
+
+                    if ((paticlePosition.Y > this._mainGame.MainViewport.Height + PARTICLE_OUTSIDE_AREA) || (paticlePosition.Y < (-1) * PARTICLE_OUTSIDE_AREA))
+                    {
+                        particle.Lifetime = PARTICLE_DEAD_TIME;
+                        //particlesPerGame++;
+                        if (this.ParticleOutOfScreen != null)
+                            this.ParticleOutOfScreen.Invoke(null, EventArgs.Empty);
+                    }
+
+                    //projection paticle on canvas
+                    if (particle.Visible)
+                    {
+                        if ((this._activeMousePosition.X >= paticlePosition.X - particle.Width * PARTICLE_SPACE) && (this._activeMousePosition.X <= paticlePosition.X + particle.Width * PARTICLE_SPACE))
+                        {
+                            if ((this._activeMousePosition.Y <= paticlePosition.Y + particle.Height * PARTICLE_SPACE) && (this._activeMousePosition.Y >= paticlePosition.Y - particle.Height * PARTICLE_SPACE))
+                            {
+                                particle.Visible = false;
+                                particle.Lifetime = PARTICLE_DEAD_TIME;
+
+                                if (this.ParticleHitMouse != null)
+                                    this.ParticleHitMouse.Invoke(player, EventArgs.Empty);
+                            }
                         }
                     }
                 }

@@ -58,7 +58,7 @@ namespace SoundCollector.HelpObjects
         /// </summary>
         /// <param name="cGame">Handle to the Game object being used. Pass in null for this 
         /// parameter if not using a Game object.</param>
-        public DefaultTexturedQuadParticleSystemTemplate(Game cGame, Vector3 fogColorNormal, Vector3 fogColorDrive, 
+        public DefaultTexturedQuadParticleSystemTemplate(Game cGame, Vector3 fogColorNormal, Vector3 fogColorDrive,
             Boolean mulitplyFogColorYWithAvarageFrequency, Boolean mulitplyFogColorZWithAvarageFrequency)
             : base(cGame)
         {
@@ -70,7 +70,7 @@ namespace SoundCollector.HelpObjects
 
             this._mulitplyFogColorYWithAvarageFrequency = mulitplyFogColorYWithAvarageFrequency;
             this._mulitplyFogColorZWithAvarageFrequency = mulitplyFogColorZWithAvarageFrequency;
-    }
+        }
 
         //===========================================================
         // Structures and Variables
@@ -181,7 +181,8 @@ namespace SoundCollector.HelpObjects
             //ParticleEvents.AddEveryTimeEvent(UpdateParticleColorUsingLerp);
 
             // Clear all of the Magnets so they can be re-added
-            MagnetList.Clear();
+            if (this.MagnetList != null)
+                this.MagnetList.Clear();
 
 
             // This function must be executed after the Color Lerp function as the Color Lerp will overwrite the Color's
@@ -223,35 +224,15 @@ namespace SoundCollector.HelpObjects
             effect.Projection = this.Projection;
             effect.Texture = this.Texture;
 
-            // effect.FogColor = DPSFHelper.RandomColor().ToVector3();
-            //if (!isSqare)
-            //{
-            //    if (av > 0.5)
-            //        effect.FogColor = new Vector3(1, av * 1.7f, 1);
-            //    else
-            //        effect.FogColor = new Vector3(1, av * 1.7f, 0);
-
-
-            //}
-            //else 
-            //{
-            //    if (av > 0.5)
-            //        effect.FogColor = new Vector3(1, 1, av * 1.7f);
-            //    else
-            //        effect.FogColor = new Vector3(0,0,av * 1.7f);
-
-
-            //}
-
             if (this.AvarageFrequency > 0.5)
             {
                 effect.FogColor = new Vector3(this._fogColorDrive.X, this._mulitplyFogColorYWithAvarageFrequency ? this._fogColorDrive.Y * this.AvarageFrequency : this._fogColorDrive.Y,
                     this._mulitplyFogColorZWithAvarageFrequency ? this._fogColorDrive.Z * this.AvarageFrequency : this._fogColorDrive.Z);
             }
             else
-            { 
+            {
                 effect.FogColor = new Vector3(this._fogColorNormal.X, this._mulitplyFogColorYWithAvarageFrequency ? this._fogColorNormal.Y * this.AvarageFrequency : this._fogColorNormal.Y,
-                    this._mulitplyFogColorZWithAvarageFrequency ? this._fogColorNormal.Z * this.AvarageFrequency : this._fogColorNormal.Z); 
+                    this._mulitplyFogColorZWithAvarageFrequency ? this._fogColorNormal.Z * this.AvarageFrequency : this._fogColorNormal.Z);
             }
 
             effect.FogEnabled = true;
@@ -370,94 +351,94 @@ namespace SoundCollector.HelpObjects
         //===========================================================
         public void LoadSeparateEmitterMagnetsParticleSystem()
         {
-            LoadParticleSystem();
+            //LoadParticleSystem();
 
             // Remove the unnecessary event that was added in the LoadEmitterMagnetParticleSytem() function
             ParticleSystemEvents.RemoveEveryTimeEvent(UpdateEmitterMagnetToTheEmittersPosition, 0, 0);
 
             // Clear the Magnets List
-            MagnetList.Clear();
+            if (this.MagnetList != null)
+            {
+                MagnetList.Clear();
 
-            // Add two Point Magnets
-            MagnetList.Add(new MagnetPoint(new Vector3(100, 50, 0),
-                                    DefaultParticleSystemMagnet.MagnetModes.Attract,
-                                    DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
-                                    0, 100, 20, 0));
-            MagnetList.Add(new MagnetPoint(new Vector3(-100, 50, 0),
-                                    DefaultParticleSystemMagnet.MagnetModes.Repel,
-                                    DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
-                                    0, 100, 20, 0));
+                // Add two Point Magnets
+                MagnetList.Add(new MagnetPoint(new Vector3(100, 50, 0),
+                                        DefaultParticleSystemMagnet.MagnetModes.Attract,
+                                        DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
+                                        0, 100, 20, 0));
+                MagnetList.Add(new MagnetPoint(new Vector3(-100, 50, 0),
+                                        DefaultParticleSystemMagnet.MagnetModes.Repel,
+                                        DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
+                                        0, 100, 20, 0));
+            }
         }
 
         public void MouseMagnet(Vector3 mys)
         {
-            //LoadParticleSystem();
-            MagnetList.Clear();
-            // Remove the unnecessary event that was added in the LoadEmitterMagnetParticleSytem() function
-            ParticleSystemEvents.RemoveEveryTimeEvent(UpdateEmitterMagnetToTheEmittersPosition, 0, 0);
+            if (this.MagnetList != null)
+            {
+                //LoadParticleSystem();
+                MagnetList.Clear();
+                // Remove the unnecessary event that was added in the LoadEmitterMagnetParticleSytem() function
+                ParticleSystemEvents.RemoveEveryTimeEvent(UpdateEmitterMagnetToTheEmittersPosition, 0, 0);
 
-            // Clear the Magnets List
-            //MagnetList.Clear();
+                // Clear the Magnets List
+                //MagnetList.Clear();
 
-            // Add two Point Magnets
+                // Add two Point Magnets
 
-            MagnetList.Add(new MagnetPoint(mys,
-                                    DefaultParticleSystemMagnet.MagnetModes.Attract,
-                                    DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
-                                    0, 25 + this.CollectingPower, 2 + this.CollectingPower, 0));
-
-
-
-
+                MagnetList.Add(new MagnetPoint(mys,
+                                        DefaultParticleSystemMagnet.MagnetModes.Attract,
+                                        DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
+                                        0, 25 + this.CollectingPower, 2 + this.CollectingPower, 0));
+            }
         }
 
         public void BonusLux(Vector3 mys)
         {
-            LoadParticleSystem();
+            //LoadParticleSystem();
 
             // Remove the unnecessary event that was added in the LoadEmitterMagnetParticleSytem() function
             ParticleSystemEvents.RemoveEveryTimeEvent(UpdateEmitterMagnetToTheEmittersPosition, 0, 0);
 
             // Clear the Magnets List
-            MagnetList.Clear();
+            if (this.MagnetList != null)
+            {
+                MagnetList.Clear();
 
-            // Add two Point Magnets
+                // Add two Point Magnets
 
-            MagnetList.Add(new MagnetPoint(mys,
-                                    DefaultParticleSystemMagnet.MagnetModes.Attract,
-                                    DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
-                                    0, 100, 20, 0));
-
-
-
-
+                MagnetList.Add(new MagnetPoint(mys,
+                                        DefaultParticleSystemMagnet.MagnetModes.Attract,
+                                        DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
+                                        0, 100, 20, 0));
+            }
         }
+
         public void BonusShield(Vector3 mys)
         {
-            LoadParticleSystem();
+            //LoadParticleSystem();
 
             // Remove the unnecessary event that was added in the LoadEmitterMagnetParticleSytem() function
             ParticleSystemEvents.RemoveEveryTimeEvent(UpdateEmitterMagnetToTheEmittersPosition, 0, 0);
 
             // Clear the Magnets List
-            MagnetList.Clear();
+            if (this.MagnetList != null)
+            {
+                MagnetList.Clear();
 
-            // Add two Point Magnets
-            MagnetList.Add(new MagnetPoint(mys,
-                                    DefaultParticleSystemMagnet.MagnetModes.Attract,
-                                    DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
-                                    0, 25 + this.CollectingPower, 2 + this.CollectingPower, 0));
+                // Add two Point Magnets
+                MagnetList.Add(new MagnetPoint(mys,
+                                        DefaultParticleSystemMagnet.MagnetModes.Attract,
+                                        DefaultParticleSystemMagnet.DistanceFunctions.SquaredInverse,
+                                        0, 25 + this.CollectingPower, 2 + this.CollectingPower, 0));
 
-            MagnetList.Add(new MagnetPoint(new Vector3(0, 0, 0),
-                                                    DefaultParticleSystemMagnet.MagnetModes.Repel,
-                                                    DefaultParticleSystemMagnet.DistanceFunctions.Cubed,
-                                                    0, 50, 15, 0));
-
-
-
-
+                MagnetList.Add(new MagnetPoint(new Vector3(0, 0, 0),
+                                                        DefaultParticleSystemMagnet.MagnetModes.Repel,
+                                                        DefaultParticleSystemMagnet.DistanceFunctions.Cubed,
+                                                        0, 50, 15, 0));
+            }
         }
-
 
         public void ToggleMagnetsAffectingPositionVsVelocity()
         {
@@ -465,7 +446,7 @@ namespace SoundCollector.HelpObjects
             mbMagnetsAffectPosition = !mbMagnetsAffectPosition;
 
             // Use the proper Particle Events
-            AddMagnetParticleEvent();
+            this.AddMagnetParticleEvent();
         }
 
         public void AddMagnetParticleEvent()
