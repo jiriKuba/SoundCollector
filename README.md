@@ -1,4 +1,7 @@
 # SoundCollector
+
+![alt text][logo]
+
 XNA game where you catching particles for points.
 
 When particles hit the shield (center of screen) game will decrement shield value.
@@ -7,11 +10,11 @@ Shield is down = Game over
 
 Score multiplier = Shield value / 10
 
-Demo:
+**Demo:**
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/bX6bv9lACiQ/0.jpg)](http://www.youtube.com/watch?v=bX6bv9lACiQ)
 
-Control:
+**Control:**
 - Particles are collected by mouse (fast movement attracts particles)
 - Left mouse button (press) turns on "Bonus Lux"
 - Right mouse button (hold) turns on "Bonus Shield"
@@ -51,6 +54,8 @@ Current version 1.0.2
 
 Installation is powered by WiX XNA: http://xnainstaller.codeplex.com/
 
-![alt text][logo]
+**Screenshot**
 
-[logo]: https://github.com/jiriKuba/SoundCollector/blob/master/SoundCollectorScreenshot.jpg "Screenshot"
+![alt text](https://github.com/jiriKuba/SoundCollector/blob/master/SoundCollectorScreenshot.jpg "Screenshot")
+
+[logo]: https://github.com/jiriKuba/SoundCollector/blob/master/SoundCollectorLogo.png "Logo"
